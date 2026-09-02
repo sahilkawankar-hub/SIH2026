@@ -1,0 +1,37 @@
+[
+  {
+    "lat": 19.0728,
+    "lng": 74.0182,
+    "location": "Hiware Bazar",
+    "caption": "Check dam and watershed structure",
+    "change": "Water table recovered, dry area now holds water year-round"
+  },
+  {
+    "lat": 19.0735,
+    "lng": 74.0195,
+    "location": "Hiware Bazar",
+    "caption": "Agricultural field near village",
+    "change": "Vegetation cover increased significantly post-treatment"
+  },
+  {
+    "lat": 19.1642,
+    "lng": 74.4300,
+    "location": "Ralegan Siddhi",
+    "caption": "Contour trenching on hillside",
+    "change": "Soil erosion reduced, forest regrowth visible"
+  },
+  {
+    "lat": 19.1650,
+    "lng": 74.4315,
+    "location": "Ralegan Siddhi",
+    "caption": "Village pond after restoration",
+    "change": "Groundwater recharge improved, pond retains water longer"
+  },
+  {
+    "lat": 19.1638,
+    "lng": 74.4290,
+    "location": "Ralegan Siddhi",
+    "caption": "Farmland irrigated using watershed water",
+    "change": "Crop yield increased due to consistent water availability"
+  }
+]

@@ -1,0 +1,377 @@
+/* ============================================================
+   WATERSHED MONITORING — Styles
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ---- Reset & Base ---- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-panel: rgba(15, 18, 28, 0.92);
+  --bg-panel-hover: rgba(25, 30, 45, 0.95);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(255, 255, 255, 0.18);
+  --text-primary: #e8ecf4;
+  --text-secondary: #8b95a8;
+  --text-muted: #5a6478;
+  --accent-cyan: #00e5ff;
+  --accent-green: #76ff03;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0c14;
+}
+
+/* ---- Layout ---- */
+.app {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Dark theme for OSM tiles via CSS filters */
+.dark-tiles {
+  filter: invert(1) hue-rotate(200deg) brightness(0.7) contrast(1.1) saturate(0.3);
+}
+
+/* Override Leaflet attribution */
+.leaflet-control-attribution {
+  background: var(--bg-panel) !important;
+  color: var(--text-muted) !important;
+  font-size: 10px !important;
+  border-radius: var(--radius-sm) 0 0 0 !important;
+  border: 1px solid var(--border) !important;
+  padding: 2px 8px !important;
+}
+.leaflet-control-attribution a {
+  color: var(--text-secondary) !important;
+}
+
+/* ---- Boundary Tooltip ---- */
+.boundary-tooltip {
+  background: var(--bg-panel) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-focus) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 4px 10px !important;
+  box-shadow: var(--shadow-panel) !important;
+}
+.boundary-tooltip::before {
+  border-top-color: var(--border-focus) !important;
+}
+
+/* ---- Control Panel ---- */
+.control-panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 260px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  color: var(--text-primary);
+  overflow: hidden;
+  animation: panelSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes panelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Panel Header */
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+}
+.panel-header svg {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+/* Sections */
+.panel-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Site Buttons */
+.site-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.site-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.site-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-focus);
+  color: var(--text-primary);
+}
+.site-btn.active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--site-color, var(--accent-cyan));
+  color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.08);
+}
+
+.site-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ---- Satellite Imagery Mode Selector ---- */
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.quick-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.quick-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.quick-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.quick-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.quick-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.quick-btn.present {
+  color: #ffca28;
+}
+
+/* Overlay Group */
+.overlay-group {
+  margin-bottom: 12px;
+}
+.overlay-group:last-child {
+  margin-bottom: 0;
+}
+
+.overlay-site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.overlay-site-name {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.current-badge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.current-badge.before {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.current-badge.after {
+  background: rgba(118, 255, 3, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(118, 255, 3, 0.3);
+}
+
+.current-badge.present {
+  background: rgba(255, 202, 40, 0.15);
+  color: #ffca28;
+  border: 1px solid rgba(255, 202, 40, 0.3);
+}
+
+/* Segmented 3-Way Mode Buttons */
+.mode-segmented {
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  gap: 2px;
+}
+
+.mode-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 2px;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+
+.mode-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mode-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.mode-btn.active.before {
+  background: rgba(0, 229, 255, 0.18);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.mode-btn.active.after {
+  background: rgba(118, 255, 3, 0.18);
+  color: var(--accent-green);
+  box-shadow: 0 0 10px rgba(118, 255, 3, 0.2);
+}
+
+.mode-btn.active.present {
+  background: rgba(255, 202, 40, 0.18);
+  color: #ffca28;
+  box-shadow: 0 0 10px rgba(255, 202, 40, 0.2);
+}
+
+/* Panel Footer */
+.panel-footer {
+  padding: 8px 16px;
+  font-size: 10px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .control-panel {
+    width: calc(100% - 32px);
+    right: 16px;
+    left: 16px;
+    top: auto;
+    bottom: 16px;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}
